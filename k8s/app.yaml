@@ -1,42 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: prsrv-service
+  name: pysrv-service
 spec:
   selector:
-    app: pysrv-pod
+    app: my-deployment
   ports:
     - name: web
       port: 80
       targetPort: 4000
+      nodePort: 30600
   type: LoadBalancer
----
-apiVersion: apps/v1
-kind: ReplicaSet
-metadata:
-  name: pysrv-rs
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: pysrv-pod
-  template:
-    metadata:
-      labels:
-        app: pysrv-pod
-    spec:
-      containers:
-      - name: pysrv
-        image: lukeshih72/pysrv:latest
-        env:
-        - name: WEBSERVICE_PORT
-          value: "4000"
-        - name: REDIS_HOST
-          value: redis-service
-        - name: REDIS_PORT
-          value: "6379"
-        ports:
-        - containerPort: 4000
 ---
 apiVersion: v1
 kind: Service

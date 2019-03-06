@@ -12,6 +12,6 @@ def getCount():
 @app.route("/")
 def hello():
   r.incr('count')
-  return "Hello World!"
+  return "Hello World v3!"
 
 app.run(host='0.0.0.0', port=os.environ.get("WEBSERVICE_PORT"), debug=True)
