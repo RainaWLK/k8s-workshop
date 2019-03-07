@@ -7,10 +7,8 @@ spec:
     app: my-deployment
   ports:
     - name: web
-      port: 80
-      targetPort: 4000
-      nodePort: 30600
-  type: LoadBalancer
+      port: 4000
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
@@ -41,3 +39,17 @@ spec:
         image: redis:latest
         ports:
         - containerPort: 6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx-deployment
+  ports:
+    - name: web
+      port: 80
+      targetPort: 80
+      nodePort: 30600
+  type: LoadBalancer
